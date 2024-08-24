@@ -4,7 +4,15 @@
     "done": false
   },
   {
-    "task": "yo",
+    "task": "i am learning",
+    "done": false
+  },
+  {
+    "task": "hi am good",
+    "done": false
+  },
+  {
+    "task": "cohort 3.0 is going good",
     "done": false
   }
 ]
