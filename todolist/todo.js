@@ -25,18 +25,21 @@ const showMenu = () => {
         {
             type: 'list',
             name: 'action',
-            message: 'What task u like to do?',
-            choices: ['Add ToDo', 'Delete ToDo', 'Marked as Done', 'View ToDos', 'Exit']
+            message: 'What task would you like to do?',
+            choices: ['Add ToDo', 'Edit ToDo', 'Delete ToDo', 'Mark as Done', 'View ToDos', 'Exit']
         }
     ]).then(answers => {
         switch (answers.action) {
             case 'Add ToDo':
                 addTodo();
                 break;
+            case 'Edit ToDo':
+                editTodo();
+                break;
             case 'Delete ToDo':
                 deleteTodo();
                 break;
-            case 'Mark As Done':
+            case 'Mark as Done':
                 markTodoAsDone();
                 break;
             case 'View ToDos':
@@ -49,6 +52,7 @@ const showMenu = () => {
     });
 };
 
+// Add a new todo
 const addTodo = () => {
     inquirer.prompt([
         {
@@ -65,6 +69,36 @@ const addTodo = () => {
     });
 };
 
+// Edit an existing todo
+const editTodo = () => {
+    const todos = loadTodos();
+    const choices = todos.map((todo, index) => ({
+        name: todo.task,
+        value: index
+    }));
+
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'todoIndex',
+            message: 'Select a ToDo to edit:',
+            choices
+        },
+        {
+            type: 'input',
+            name: 'updatedTask',
+            message: 'Enter the new task content:',
+        }
+    ]).then(answers => {
+        const { todoIndex, updatedTask } = answers;
+        todos[todoIndex].task = updatedTask;
+        saveTodos(todos);
+        console.log("ToDo updated!");
+        showMenu();
+    });
+};
+
+// Delete a todo
 const deleteTodo = () => {
     const todos = loadTodos();
     const choices = todos.map((todo, index) => ({
@@ -87,6 +121,7 @@ const deleteTodo = () => {
     });
 };
 
+// Mark a todo as done
 const markTodoAsDone = () => {
     const todos = loadTodos();
     const choices = todos.map((todo, index) => ({
@@ -109,6 +144,7 @@ const markTodoAsDone = () => {
     });
 };
 
+// View all todos
 const viewTodos = () => {
     const todos = loadTodos();
     console.log("\nYour ToDo List:\n");
@@ -118,5 +154,6 @@ const viewTodos = () => {
     showMenu();
 };
 
+// Initialize
 initFile();
 showMenu();
