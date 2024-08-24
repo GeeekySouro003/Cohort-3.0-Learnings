@@ -1,5 +1,5 @@
 const fs = require('fs');
-const inquirer = require('inquirer');
+const inquirer = require('inquirer').default;
 const path = require('path');
 
 const filePath = path.join(__dirname, 'todos.json');
@@ -25,8 +25,8 @@ const showMenu = () => {
         {
             type: 'list',
             name: 'action',
-            message: 'What would you like to do?',
-            choices: ['Add ToDo', 'Delete ToDo', 'Mark As Done', 'View ToDos', 'Exit']
+            message: 'What task u like to do?',
+            choices: ['Add ToDo', 'Delete ToDo', 'Marked as Done', 'View ToDos', 'Exit']
         }
     ]).then(answers => {
         switch (answers.action) {
@@ -60,7 +60,7 @@ const addTodo = () => {
         const todos = loadTodos();
         todos.push({ task: answer.todo, done: false });
         saveTodos(todos);
-        console.log("ToDo added successfully!");
+        console.log("ToDo added!");
         showMenu();
     });
 };
@@ -82,7 +82,7 @@ const deleteTodo = () => {
     ]).then(answer => {
         todos.splice(answer.todoIndex, 1);
         saveTodos(todos);
-        console.log("ToDo deleted successfully!");
+        console.log("ToDo deleted!");
         showMenu();
     });
 };
