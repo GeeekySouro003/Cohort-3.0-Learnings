@@ -1,6 +1,7 @@
 const fs = require('fs');
 const inquirer = require('inquirer').default;
 const path = require('path');
+const chalk = require('chalk'); // Import chalk module
 
 const filePath = path.join(__dirname, 'todos.json');
 
@@ -20,16 +21,24 @@ const saveTodos = (todos) => {
 };
 
 const showMenu = () => {
-    console.log("\nToDo List CLI\n");
+    console.log(chalk.blue.bold("\nToDo List CLI\n")); // Title in blue
     inquirer.prompt([
         {
             type: 'list',
             name: 'action',
-            message: 'What task would you like to do?',
-            choices: ['Add ToDo', 'Edit ToDo', 'Delete ToDo', 'Mark as Done', 'View ToDos', 'Exit']
+            message: chalk.yellow('What task would you like to do?'), // Prompt in yellow
+            choices: [
+                chalk.green('Add ToDo'),
+                chalk.cyan('Edit ToDo'),
+                chalk.red('Delete ToDo'),
+                chalk.magenta('Mark as Done'),
+                chalk.blue('View ToDos'),
+                chalk.gray('Exit')
+            ]
         }
     ]).then(answers => {
-        switch (answers.action) {
+        const action = answers.action.replace(/\x1B\[\d+m/g, ''); // Strip color formatting for switch case
+        switch (action) {
             case 'Add ToDo':
                 addTodo();
                 break;
@@ -46,7 +55,7 @@ const showMenu = () => {
                 viewTodos();
                 break;
             case 'Exit':
-                console.log("Goodbye!");
+                console.log(chalk.gray("Goodbye!"));
                 process.exit();
         }
     });
@@ -58,13 +67,13 @@ const addTodo = () => {
         {
             type: 'input',
             name: 'todo',
-            message: 'Enter the new ToDo:'
+            message: chalk.yellow('Enter the new ToDo:')
         }
     ]).then(answer => {
         const todos = loadTodos();
         todos.push({ task: answer.todo, done: false });
         saveTodos(todos);
-        console.log("ToDo added!");
+        console.log(chalk.green("ToDo added!"));
         showMenu();
     });
 };
@@ -73,7 +82,7 @@ const addTodo = () => {
 const editTodo = () => {
     const todos = loadTodos();
     const choices = todos.map((todo, index) => ({
-        name: todo.task,
+        name: chalk.cyan(todo.task), // Show tasks in cyan
         value: index
     }));
 
@@ -81,19 +90,19 @@ const editTodo = () => {
         {
             type: 'list',
             name: 'todoIndex',
-            message: 'Select a ToDo to edit:',
+            message: chalk.yellow('Select a ToDo to edit:'),
             choices
         },
         {
             type: 'input',
             name: 'updatedTask',
-            message: 'Enter the new task content:',
+            message: chalk.yellow('Enter the new task content:'),
         }
     ]).then(answers => {
         const { todoIndex, updatedTask } = answers;
         todos[todoIndex].task = updatedTask;
         saveTodos(todos);
-        console.log("ToDo updated!");
+        console.log(chalk.green("ToDo updated!"));
         showMenu();
     });
 };
@@ -102,7 +111,7 @@ const editTodo = () => {
 const deleteTodo = () => {
     const todos = loadTodos();
     const choices = todos.map((todo, index) => ({
-        name: todo.task,
+        name: chalk.red(todo.task), // Show tasks to be deleted in red
         value: index
     }));
 
@@ -110,13 +119,13 @@ const deleteTodo = () => {
         {
             type: 'list',
             name: 'todoIndex',
-            message: 'Select a ToDo to delete:',
+            message: chalk.yellow('Select a ToDo to delete:'),
             choices
         }
     ]).then(answer => {
         todos.splice(answer.todoIndex, 1);
         saveTodos(todos);
-        console.log("ToDo deleted!");
+        console.log(chalk.red("ToDo deleted!"));
         showMenu();
     });
 };
@@ -125,7 +134,7 @@ const deleteTodo = () => {
 const markTodoAsDone = () => {
     const todos = loadTodos();
     const choices = todos.map((todo, index) => ({
-        name: todo.task + (todo.done ? ' (Done)' : ''),
+        name: todo.done ? chalk.green(todo.task + ' (Done)') : todo.task, // Done tasks in green
         value: index
     }));
 
@@ -133,13 +142,13 @@ const markTodoAsDone = () => {
         {
             type: 'list',
             name: 'todoIndex',
-            message: 'Select a ToDo to mark as done:',
+            message: chalk.yellow('Select a ToDo to mark as done:'),
             choices
         }
     ]).then(answer => {
         todos[answer.todoIndex].done = true;
         saveTodos(todos);
-        console.log("ToDo marked as done!");
+        console.log(chalk.green("ToDo marked as done!"));
         showMenu();
     });
 };
@@ -147,9 +156,14 @@ const markTodoAsDone = () => {
 // View all todos
 const viewTodos = () => {
     const todos = loadTodos();
-    console.log("\nYour ToDo List:\n");
+    console.log(chalk.blue("\nYour ToDo List:\n"));
     todos.forEach((todo, index) => {
-        console.log(`${index + 1}. ${todo.task} ${todo.done ? '(Done)' : ''}`);
+        const taskDisplay = `${index + 1}. ${todo.task}`;
+        if (todo.done) {
+            console.log(chalk.green(taskDisplay + ' (Done)')); // Completed tasks in green
+        } else {
+            console.log(chalk.blue(taskDisplay)); // Pending tasks in blue
+        }
     });
     showMenu();
 };
