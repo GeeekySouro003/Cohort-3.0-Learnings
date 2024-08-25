@@ -61,4 +61,4 @@ After running `node todo.js`, you'll be presented with a simple menu to perform 
 
 ## Example:-
 
-![alt text](image.png)
+![alt text](image-1.png)
