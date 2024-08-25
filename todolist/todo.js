@@ -1,7 +1,12 @@
-const fs = require('fs');
-const inquirer = require('inquirer').default;
-const path = require('path');
-const chalk = require('chalk'); // Import chalk module
+import fs from 'fs';
+import inquirer from 'inquirer';
+import chalk from 'chalk';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Fix __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const filePath = path.join(__dirname, 'todos.json');
 
