@@ -14,6 +14,7 @@ const readtodo = () => {
     }
 };
 
+
 // Helper function to write tasks
 const writetasks = (todos) => {
     fs.writeFileSync(todosPath, JSON.stringify(todos, null, 2), 'utf-8');
