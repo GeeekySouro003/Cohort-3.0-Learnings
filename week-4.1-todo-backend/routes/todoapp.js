@@ -35,4 +35,38 @@ router.post('/', (req,res) => { // Add a task
 });
 
 
+router.delete('/:id', (req, res) => {
+    const todos=readtodo();
+    const id=parseInt(req.params.id);
+
+    const filteredTask = todos.filter(todo => todo.id !== id); 
+
+
+    if(filteredTask.length !== todos.length) {
+        writetasks(filteredTask);
+        res.status(200).json({message:"Task deleted successfully "});
+    }
+    else {
+        res.status(404).json({message:"Task does not exist "});
+    }
+})
+
+
+router.put('/:id', (req, res) => {
+    const todos=readtodo();
+    const id=parseInt(req.params.id);9
+    const index=todos.findIndex(todo =>todo.id === id);
+
+    if(index !== -1) {
+        todos[index].task=req.body.task || todos[index].task;
+        todos[index].completed=req.body.completed !== undefined ? req.body.completed : todos[index].completed;
+        writetasks(todos);
+        res.json(todos[index]);
+    } 
+    else {
+        res.status(404).json({message:"Task does not exist "});
+    }
+});
+
+module.exports=router;
 
