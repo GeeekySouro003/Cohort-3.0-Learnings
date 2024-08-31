@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require('fs');
-const path = require('../../week-4.1-todo-backend/data/todos.json')
+const path = require('../datafile/task')
 const todosPath = path.join(__dirname, '..', '..', 'data', 'todos.json');
 const router = express.Router();
 
