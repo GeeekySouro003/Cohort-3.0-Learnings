@@ -19,7 +19,9 @@ function realsumhandler(req, res) {
         ans: a + b
     })
 }
+//Another use of hanlding middleware
 
+//app.use(requestincrease); // all the handlers after this line will use the middleware
 app.get("/sum",requestincrease,realsumhandler); // requestincrease is the middleware function
 /*
 app.get("/sum",requestincrease, function(req, res) {
@@ -43,4 +45,6 @@ app.get("/multiply", requestincrease,function(req, res) {
     })
 })
  */
+
+
 app.listen(3000);
