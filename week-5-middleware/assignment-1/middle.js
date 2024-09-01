@@ -1,7 +1,7 @@
 const express=require('express');
-
+const bodyParser=require('body-parser');
 const app = express();
-
+/*
 function middleware(req, res, next) {
     console.log('Method: ' + req.method);
     console.log('URL ' + req.url);
@@ -49,5 +49,19 @@ app.get("/subtract", function(req, res) {
         ans: a - b
     })
 });
+*/
+
+app.use(express.json()); // external middleware for parsing JSON data 
+// in express if you want to send json data
+// you need to parse the json data
+app.post("/sum1",function(req, res) {
+    console.log(req.body);
+    const a = parseInt(req.body.a);
+    const b = parseInt(req.body.b);
+
+    res.json({
+        ans: a + b
+    })
+})
 
 app.listen(3000);
