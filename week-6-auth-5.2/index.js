@@ -8,7 +8,35 @@ let users=[] // in memory db
 
 app.use(express.json());
 
-app.post('/signup', function(req, res) {
+function auth(req, res, next) {
+    const token=req.headers.authorization;
+
+    if(token) {
+        jwt.verify(token,JWT_SECRET,(err,decoded) => {
+            if(err) {
+                res.status(401).send({
+                    message: "Unauthorized",
+                })
+            }
+            else {
+                req.user=decoded;
+                next();
+            }
+        })
+    }
+    else {
+        res.status(401).send({
+            message: "Unauthorized",
+        })
+    }
+}
+
+function logger(req, res, next) {
+    console.log(req.method+ "request came");
+    next();
+}
+
+app.post('/signup',logger, function(req, res) {
 const username=req.body.username;
 const password=req.body.password;
 
@@ -23,7 +51,7 @@ res.send ({
 })
 
 
-app.post('/signin', function(req, res) {
+app.post('/signin',logger,function(req, res) {
     const username=req.body.username;
     const password=req.body.password;
 
@@ -48,6 +76,31 @@ app.post('/signin', function(req, res) {
 })
 
 
-app.get('/me', function(req, res) {
-
+app.get("/meu",logger,auth,function(req, res) {
+    const user=req.user;
+    res.json({
+        username: user.username,
+        password: user.password
+    })
 })
+app.get('/me', function(req, res) {
+const token=req.headers.token;
+
+const decodeData=jwt.verify(token,JWT_SECRET);  // decoding using secret key to prevent security vulnerability
+
+if(decodeData.username) {
+    const user=users.find(user => user.username === username);
+
+    res.json({
+        username:user.username,
+        password:user.password
+    })
+}
+else {
+    res.status(401).send({
+        message:"Unauthorized"
+    })
+}
+})
+
+app.listen(3000);
