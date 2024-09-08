@@ -35,6 +35,25 @@
     
         alert("Signed in successfully");
     }
+
+    async function logout() {
+        localStorage.removeItem("token");
+    }
+
+    async function getUserInformation() {
+        const token = localStorage.getItem("token");
+    
+        if (token) {
+            const response = await axios.get("http://localhost:3000/meu", {
+                headers: {
+                    Authorization: token
+                }
+            });
+            document.getElementById("information").innerHTML = response.data.username;
+        }
+    }
+
+    getUserInformation();
 </script>
 <body>
     <div>
@@ -46,8 +65,8 @@
 
     <div>
         SignIn
-        <input type="text" placeholder="dgsouro254@gmail.com" name="username">
-        <input type="password" placeholder="nfnjn" name="password">
+        <input id="signin-username" type="text" placeholder="dgsouro254@gmail.com" name="username">
+        <input id="signin-password" type="password" placeholder="nfnjn" name="password">
         <button onclick="signin()">Submit</button>
      </div>
 
