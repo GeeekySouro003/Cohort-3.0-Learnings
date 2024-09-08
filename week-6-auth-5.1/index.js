@@ -32,7 +32,7 @@ const user = users.find(user => user.username === username && user.password === 
 
 if(user ) {
     const token=jwt.sign({    // function signature of jsonwebtoken
-        username: user,username
+        username: user.username
     },JWT_SECRET);
     user.token = token;
     res.send ({
