@@ -16,9 +16,9 @@ const Todos=new Schema({
 })
 
 const UserModel=mongoose.model("users",User);  // the users paramter is the database collection where the data to be inserted and the User is the object we created
-const TodoModel=mongoose.model("todos",Todo);
+const TodoModel=mongoose.model("todos",Todos);
 
-modules.export = {
+module.exports = {
     UserModel,
     TodoModel
 }
