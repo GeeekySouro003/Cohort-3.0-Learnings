@@ -9,6 +9,8 @@ mongoose.connect("mongodb+srv://dcodespider:Mistun12345@cluster0.0kc4a.mongodb.n
 app.use(express.json());
 app.post("/signup", async function(req, res){
 
+    try {
+    
     const email=req.body.email;
     const password=req.body.password;
     const name=req.body.name;
@@ -24,10 +26,16 @@ app.post("/signup", async function(req, res){
     res.json({
         "message": "You are successfully signed up",
     })
+
+    }
+    catch(e) {
+        res.status(500).json({
+            "message":"Error while signing up"
+        })
+    }
 });
 
-app.post("/signin", async function (req, res) {
-    
+app.post("/signin", async function (req, res) { 
 const email=req.body.email;
 const password=req.body.password;
 
