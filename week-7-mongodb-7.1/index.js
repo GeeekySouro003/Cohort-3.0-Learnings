@@ -15,7 +15,8 @@ app.post("/signup", async function(req, res){
     const password=req.body.password;
     const name=req.body.name;
 
-    const hashedPassword= await bcrypt.hash(password,10);
+    const hashedPassword= await bcrypt.hash(password,10); //10 is the saltrounds more saltrounds better it is 
+    console.log(hashedPassword);
 
     await UserModel.create({
         email: email,
@@ -42,16 +43,16 @@ const password=req.body.password;
 console.log("Email:", email);
 console.log("Password:", password);
 
-const user=await UserModel.findOne({
+const response=await UserModel.findOne({
     email: email,
 })
 
 
 const passwordMatch = bcrypt.compare(password,user.password);
 
-console.log(user);
+console.log(response);
 
-if (user && passwordMatch) {
+if (response && passwordMatch) {
     const token= jwt.sign({
      id: user._id.toString()
     }, JWT_SECRET);
