@@ -5,12 +5,33 @@ const app=express();
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 const mongoose=require('mongoose');
+const {z} = require('zod');
 mongoose.connect("mongodb+srv://dcodespider:Mistun12345@cluster0.0kc4a.mongodb.net/todo-souro-app");
 app.use(express.json());
 app.post("/signup", async function(req, res){
 
-    try {
+    const requiredbody=z.object({
+        email:z.string().min(4).max(100).email(),
+        password:z.string().min(4).max(100),
+        name:z.string().min(4).max(40)
+    })
     
+    //const parseddata=requiredbody.parse(req.body);
+
+    const parsedatasuccess=requiredbody.safeParse(req.body);  // safe parse doesnt throw error it return if ok true or not okay the incorrect fields
+
+    if(!parsedatasuccess.success) {
+        res.json({
+            message: "Incorrect format",
+            error:parsedatasuccess.error
+
+        
+        })
+        return
+    }
+
+
+
     const email=req.body.email;
     const password=req.body.password;
     const name=req.body.name;
@@ -27,14 +48,9 @@ app.post("/signup", async function(req, res){
     res.json({
         "message": "You are successfully signed up",
     })
-
     }
-    catch(e) {
-        res.status(500).json({
-            "message":"Error while signing up"
-        })
-    }
-});
+    
+);
 
 app.post("/signin", async function (req, res) { 
 const email=req.body.email;
