@@ -1,14 +1,16 @@
 const express=require('express');
-const { createUserRoutes } = require('./routes/user');
-const { createCourseRoutes } = require('./routes/course');
+const { userRouter } = require('./routes/user');
+const { courseRouter } = require('./routes/course');
+const { adminRouter } = require('./routes/admin');
 const app=express();
 
 
-app.use("/user",userRouter);
-app.use("/course",courseRouter);
+app.use("api/v1/user",userRouter);
+app.use("api/v1/course",courseRouter);
+app.use("api/v1/admin",adminRouter);
 
-createUserRoutes(app);
-createCourseRoutes(app);
+//createUserRoutes(app);
+//createCourseRoutes(app);
 
 
 
