@@ -1,22 +1,23 @@
 const mongoose = require('mongoose');
+console.log("Connected to ")
 const Schema=mongoose.Schema;
 const ObjectId=mongoose.Types.ObjectId;
 
-const UserSchema=({
+const UserSchema = new Schema({
 email:{type:String,unique:true},
 password:String,
 firstName:String,
 lastName:String,
 });
 
-const adminSchema= ({
+const adminSchema = new Schema ({
     email:{type:String,unique:true},
     password:String,
     firstName:String,
     lastName:String,
 });
 
-const courseSchema= ({
+const courseSchema  = new Schema ({
 title:String,
 description:String,
 price:Number,
@@ -25,7 +26,7 @@ creatorId:ObjectId
 });
 
 
-const PurchaseSchema=({
+const PurchaseSchema = new Schema ({
 
     userId:ObjectId,
     courseId:ObjectId,
