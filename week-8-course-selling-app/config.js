@@ -1,2 +1,2 @@
-const JWT_USER_SECRET="souroisgoddd";
-const JWT_ADMIN_SECRET="souroisdevv";
+const JWT_USER_SECRET=process.env.JWT_USER_SECRET;
+const JWT_ADMIN_SECRET=process.env.JWT_ADMIN_SECRET;
