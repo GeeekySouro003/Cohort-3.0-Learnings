@@ -3,7 +3,7 @@ console.log("Connected to ")
 const Schema=mongoose.Schema;
 const ObjectId=mongoose.Types.ObjectId;
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
 email:{type:String,unique:true},
 password:String,
 firstName:String,
@@ -32,13 +32,13 @@ const PurchaseSchema = new Schema ({
     courseId:ObjectId,
 });
 
-const UserModel=mongoose.model("user",UserSchema);
+const userModel=mongoose.model("user",userSchema);
 const adminModel=mongoose.model("admin",adminSchema);
 const courseModel=mongoose.model("course",courseSchema);
 const purchaseModel=mongoose.model("purchase",PurchaseSchema);
 
 module.exports={
-    UserModel,
+    userModel,
     adminModel,
     courseModel,
     purchaseModel

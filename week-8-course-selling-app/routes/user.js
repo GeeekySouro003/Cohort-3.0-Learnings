@@ -1,13 +1,23 @@
 const {Router} =require('express');
 const userRouter=Router();
+const {userModel}=require('../db.js');
 
 
-    userRouter.post("/signup", function(req, res) {
+   userRouter.post("/signup",async function(req,res) {
 
-        res.json({
-            message:"Signup endpoint"
-        })
-    });
+    const {email,password,firstName,lastName}=req.body;
+    await userModel.create({
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName
+    })
+
+    res.json({
+        message:"Sign up successfully done"
+    })
+
+   })
     
     userRouter.post("/signin", function(req, res) {
     
@@ -24,7 +34,7 @@ const userRouter=Router();
     });
     
 module.exports ={
-    userRouter:userRouter
+    userRouter:userRouter,
 }
     
 
