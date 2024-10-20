@@ -1,6 +1,8 @@
 const {Router} =require('express');
 const userRouter=Router();
 const {userModel}=require('../db.js');
+const jwt=require('jsonwebtoken');
+const {JWT_USER_SECRET}=require("../config.js");
 
 
    userRouter.post("/signup",async function(req,res) {
@@ -19,11 +21,30 @@ const {userModel}=require('../db.js');
 
    })
     
-    userRouter.post("/signin", function(req, res) {
-    
+    userRouter.post("/signin", async function(req, res) {
+
+        const {email,password}=req.body;
+        const user=await userModel.findOne({
+            email: email,
+            password: password
+        });
+
+        if(user) {
+            const token=jwt.sign({
+                id:user._id,
+            },JWT_USER_SECRET);
+        
+
         res.json({
-            message:"Signup endpoint"
+            token: token
         })
+    }
+    
+        else {
+            res.status(403).json({
+                message:"Invalid credentials"
+            })
+        }
     });
 
     userRouter.get("/purchases", function(req, res) {
