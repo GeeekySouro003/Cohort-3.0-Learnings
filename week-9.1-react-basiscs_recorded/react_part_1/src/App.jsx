@@ -1,34 +1,50 @@
 import { useState } from "react";
+import { PostComponent } from "./Post";
 
-// Create a function component named App that will be rendered in the root element
+
 function App() {
-  // return JSX that will be rendered
-  return (
-      // Apply inline styles to the div element
-      <div style={{ backgroundColor: "#dfe6e9", height: "100vh" }}>
-        <ToggleMessage/>
+ const[posts,setposts]=useState([]) // posts is an empty array of objects
+
+ const postComponents =posts.map(post=> <PostComponent
+  name={post.name}
+  subtitle={post.subtitle}
+  time={post.time}
+  image={post.image}
+  description={post.description}
+ />)
+
+ function addPost() {
+  setposts([...posts,{
+    name:"souradip",
+    subtitle:"1000 followers",
+    time:"3m ago",
+    image:"https://i.pinimg.com/236x/c7/1d/54/c71d54529e950b10ccbd7ec04d529512.jpg",
+    description:"What to know how to be a achiever from cohort 3.0"
+  }])
+ }
+ return (
+  <div style={{background:"#dfe6e9",height:"100vh"}}>
+    <button onClick={addPost}>Add Post</button>
+    <div style={{display:"flex",justifyContent:"center"}}>
+      <div>
+        {postComponents}
       </div>
-  );
+    </div>
+
+  </div>
+ )
 }
 
-const ToggleMessage = () => {
-  // Create a state variable isVisible and a function setIsVisible to toggle the visibility of the message
-  const [isVisible, setIsVisible] = useState(false); // defining a new state variable
 
-//when the value of a state variable changes
-//the component that uses the state variable re-renders
-  return (
-      <div>
-          {/* Create a button to toggle the visibility of the message */}
-          <button onClick={() => setIsVisible(!isVisible)}>
-              Toggle Message
-          </button>
 
-          {/* Conditionally render the message if isVisible is true */}
-          {isVisible && <p>This message is conditionally rendered!</p>}
-      </div>
-  );
-};
+
+
+
+
+
+
+
+
 
 
 // // Create a style object to apply styles to the div element in PostComponent
@@ -104,4 +120,50 @@ const ToggleMessage = () => {
 //               </div> */}
 
 // Export App Component to use it in other components
+
+
+
+//Toggle Notification Code
+
+
+// function App() {
+//   // return JSX that will be rendered
+//   return (
+//       // Apply inline styles to the div element
+//       <div style={{ backgroundColor: "#dfe6e9", height: "100vh" }}>
+//         <NotificationCount/>
+//         <NotificationCount/>
+//         <NotificationCount/>
+//       </div>
+//   );
+// }
+
+
+// const NotificationCount = () => {
+//   // Create a state variable isVisible and a function setIsVisible to toggle the visibility of the message
+//   const [notificationCount, setnotificationCount] = useState(0); // defining a new state variable
+
+// //when the value of a state variable changes
+// //the component that uses the state variable re-renders
+// function increment() {
+//   setnotificationCount(notificationCount+1);
+// }
+
+//   return (
+//       <div>
+//           {/* Create a button to toggle the visibility of the message */}
+//           <button onClick={increment}>
+//              Increase Count
+//           </button>
+
+//           {/* Conditionally render the message if isVisible is true */}
+//           {notificationCount}
+//       </div>
+//   );
+// };
+
+
+
+
+
 export default App;
