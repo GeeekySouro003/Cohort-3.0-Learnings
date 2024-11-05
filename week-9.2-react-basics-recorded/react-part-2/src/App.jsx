@@ -1,33 +1,55 @@
-import React from "react";
+import React from "react";  //Fragments in react
 
-const App = () => {
-  const todos=[{
-    title:"Go to gym",
-    done:false
-  }, {
-    title:"Attend cohort 3.0",
-    done:true
-  }];
+function App () {
+  return (
+  <>
+  <div>Hi there</div>
+  </>
+  )
+}
 
-  const todosComponents=todos.map(todo => <Todo
-    title={todo.title} done={todo.done} />)
-    return (
-      <div>
-        {todosComponents} 
-        </div>  
-        )
+export default App;
+
+
+
+
+
+
+
+
+
+//List and Keys
+
+// import React from "react";
+
+// const App = () => {
+//   const todos=[{
+//     title:"Go to gym",
+//     done:false
+//   }, {
+//     title:"Attend cohort 3.0",
+//     done:true
+//   }];
+
+//   const todosComponents=todos.map(todo => <Todo
+//     title={todo.title} done={todo.done} />)
+//     return (
+//       <div>
+//         {todosComponents} 
+//         </div>  
+//         )
      
 
   
-}
+// }
 
-function Todo({title,done}) {
-  return <div>
-    {title}-{done ? "Done" : "not done"}
-</div>
+// function Todo({title,done}) {
+//   return <div>
+//     {title}-{done ? "Done" : "not done"}
+// </div>
 
-}
-export default App;
+// }
+// export default App;
 
 
 
