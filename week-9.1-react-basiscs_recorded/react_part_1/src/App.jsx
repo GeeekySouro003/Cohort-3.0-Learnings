@@ -40,6 +40,47 @@ useEffect(function() {
 
 
 
+// Useffect and dependecny array
+
+
+// function App() {
+//   const[currenttab,setcurrentab]=useState(1);
+//   const [tabData,settabData]=useState({});
+//   const[loading,setloading]=useState(true);
+ 
+//  useEffect(function() {
+//    setloading(true);
+//    fetch("https://jsonplaceholder.typicode.com/todos/"+currenttab)
+//    .then(async res => {
+//      const json=await res.json();
+//      settabData(json);
+//      setloading(false);
+//    })
+//  },[currenttab])
+ 
+//   return <div>
+//    <button onClick={function() {
+//      setcurrentab(1)
+//    }} style={{color:currenttab == 1 ? "red":"black"}}>Todo #1</button>
+//    <button onClick={function() {
+//      setcurrentab(2)
+//    }} style={{color:currenttab == 2 ? "red":"black"}}>Todo #2</button>
+//    <button onClick={function() {
+//      setcurrentab(3)
+//    }} style={{color:currenttab == 3 ? "red":"black"}}>Todo #3</button>
+//    <button onClick={function() {
+//      setcurrentab(4)
+//    }} style={{color:currenttab == 4 ? "red":"black"}}>Todo #4</button>
+ 
+//    <br/>
+//    {loading ? "Loading..." : tabData.title}
+//   </div>
+//  }
+ 
+
+
+
+
 
 
 
