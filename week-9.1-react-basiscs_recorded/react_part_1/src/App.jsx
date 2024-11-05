@@ -1,38 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PostComponent } from "./Post";
 
 
 function App() {
- const[posts,setposts]=useState([]) // posts is an empty array of objects
+ const[currenttab,setcurrentab]=useState(1);
+ const [tabData,settabData]=useState({});
+ const[loading,setloading]=useState(true);
 
- const postComponents =posts.map(post=> <PostComponent
-  name={post.name}
-  subtitle={post.subtitle}
-  time={post.time}
-  image={post.image}
-  description={post.description}
- />)
+useEffect(function() {
+  setloading(true);
+  fetch("https://jsonplaceholder.typicode.com/todos/"+currenttab)
+  .then(async res => {
+    const json=await res.json();
+    settabData(json);
+    setloading(false);
+  })
+},[currenttab])
 
- function addPost() {
-  setposts([...posts,{
-    name:"souradip",
-    subtitle:"1000 followers",
-    time:"3m ago",
-    image:"https://i.pinimg.com/236x/c7/1d/54/c71d54529e950b10ccbd7ec04d529512.jpg",
-    description:"What to know how to be a achiever from cohort 3.0"
-  }])
- }
- return (
-  <div style={{background:"#dfe6e9",height:"100vh"}}>
-    <button onClick={addPost}>Add Post</button>
-    <div style={{display:"flex",justifyContent:"center"}}>
-      <div>
-        {postComponents}
-      </div>
-    </div>
+ return <div>
+  <button onClick={function() {
+    setcurrentab(1)
+  }} style={{color:currenttab == 1 ? "red":"black"}}>Todo #1</button>
+  <button onClick={function() {
+    setcurrentab(2)
+  }} style={{color:currenttab == 2 ? "red":"black"}}>Todo #2</button>
+  <button onClick={function() {
+    setcurrentab(3)
+  }} style={{color:currenttab == 3 ? "red":"black"}}>Todo #3</button>
+  <button onClick={function() {
+    setcurrentab(4)
+  }} style={{color:currenttab == 4 ? "red":"black"}}>Todo #4</button>
 
-  </div>
- )
+  <br/>
+  {loading ? "Loading..." : tabData.title}
+ </div>
 }
 
 
@@ -42,6 +43,38 @@ function App() {
 
 
 
+
+
+
+// const[posts,setposts]=useState([]) // posts is an empty array of objects
+
+//  const postComponents =posts.map(post=> <PostComponent
+//   name={post.name}
+//   subtitle={post.subtitle}
+//   time={post.time}
+//   image={post.image}
+//   description={post.description}
+//  />)
+
+//  function addPost() {
+//   setposts([...posts,{
+//     name:"souradip",
+//     subtitle:"1000 followers",
+//     time:"3m ago",
+//     image:"https://i.pinimg.com/236x/c7/1d/54/c71d54529e950b10ccbd7ec04d529512.jpg",
+//     description:"What to know how to be a achiever from cohort 3.0"
+//   }])
+//  }
+//  return (
+//   <div style={{background:"#dfe6e9",height:"100vh"}}>
+//     <button onClick={addPost}>Add Post</button>
+//     <div style={{display:"flex",justifyContent:"center"}}>
+//       <div>
+//         {postComponents}
+//       </div>
+//     </div>
+
+//   </div>
 
 
 
