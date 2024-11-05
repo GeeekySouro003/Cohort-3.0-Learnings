@@ -1,35 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const todos=[{
+    title:"Go to gym",
+    done:false
+  }, {
+    title:"Attend cohort 3.0",
+    done:true
+  }];
 
-  return (
-    <>
+  const todosComponents=todos.map(todo => <Todo
+    title={todo.title} done={todo.done} />)
+    return (
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+        {todosComponents} 
+        </div>  
+        )
+     
+
+  
 }
 
-export default App
+function Todo({title,done}) {
+  return <div>
+    {title}-{done ? "Done" : "not done"}
+</div>
+
+}
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Props and children in react
+
+// import React from 'react';
+
+// const Card = ({ children }) => {
+//     return (
+//         <div style={{
+//             border: '1px solid #ccc',
+//             borderRadius: '5px',
+//             padding: '20px',
+//             margin: '10px',
+//             boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.1)',
+//         }}>
+//             {children}
+//         </div>
+//     );
+// };
+
+// const App = () => {
+//     return (
+//         <div>
+//             <Card>
+//                 <h2>Card Title</h2>
+//                 <p>This is some content inside the card.</p>
+//             </Card>
+//             <Card>
+//                 <h2>Another Card</h2>
+//                 <p>This card has different content!</p>
+//             </Card>
+//         </div>
+//     );
+// };
+
+// export default App;
