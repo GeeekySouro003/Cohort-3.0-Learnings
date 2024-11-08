@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Routes, Route,Link,useNavigate } from "react-router-dom";
 import './App.css'
 
 function App() {
@@ -8,9 +7,48 @@ function App() {
 
   return (
     <div>
-      Hi there
+      <BrowserRouter>
+      <Link to="/">Allen</Link>
+      |
+      <Link to="/neet/online-coaching-class-11">Class 11 Program</Link>
+      |
+      <Link to="/neet/online-coaching-class-12">Class 12 Program</Link>
+      <Routes>
+        <Route path='/neet/online-coaching-class-11' element={<Class11Program />} />
+        <Route path='/neet/online-coaching-class-12' element={<Class12Program />} />
+        <Route path='/' element={<Landing />} />
+        
+      </Routes>
+      </BrowserRouter>
     </div>
   )
 }
 
+function Class11Program() {
+  return <div>
+    NEET programs for Class 11th
+  </div>
+}
+
+
+
+
+function Class12Program() {
+  const navigate=useNavigate();
+
+  function redirectUser() {
+navigate('/');
+  }
+  return <div>
+    NEET programs for Class 12th
+    <button onClick={redirectUser}>Go back to Landing Page</button>
+  </div>
+}
+
+
+function Landing() {
+  return <div>
+    Welcome to Allen!!
+  </div>
+}
 export default App
