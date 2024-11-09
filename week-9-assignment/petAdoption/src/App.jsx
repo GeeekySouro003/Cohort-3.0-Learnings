@@ -1,3 +1,4 @@
+import Header from './components/Header';
 import './MyApp.css';;
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
         backgroundPosition:'center'
       }}
     >
-      PetAdoptionForm
+      <Header message={"Pet Adoption Form"} />
     </div>
   );
 }
