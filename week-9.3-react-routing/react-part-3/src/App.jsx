@@ -1,22 +1,30 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import './App.css';
 
 function App () {
-  const inputref=useRef(); //Useref lets u reference a value so that when that value changes u dont need to re-render the whole component again
-
-
-  function focusonInput() {
-    //document.getElementById("name").focus();
-    inputref.current.focus();
-  }
-return (
-  <div>
-    Sign up
-    <input ref={inputref}  type={"text"}></input>
-    <input type={"text"}></input>
-    <button onClick={focusonInput}>Submit</button>
+  const[currentcount,setcurrentcount] =useState(0);
+  //const [timer,setimer]=useState(0);
+  const timer=useRef();
+  
+  return <div>
+    {currentcount}
+    <br />
+    <button onClick={startclock}>Start</button>
+    <button onClick={stopclock}>Stop</button>
   </div>
-)
+
+  function startclock() {
+    let value=setInterval( () => {
+      setcurrentcount(c => c+1);
+    },1000);
+
+    timer.current = value;
+  }
+
+  function stopclock() {
+    console.log(timer);
+    clearInterval(timer.current);
+  }
 }
 
 
