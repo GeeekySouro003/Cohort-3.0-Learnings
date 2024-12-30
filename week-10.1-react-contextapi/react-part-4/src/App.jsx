@@ -2,23 +2,23 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const[bulbOn,setbulbOn]=useState(false); //returns an array[] 
 return (
   <div>
-  <LightBulb/>
+  <LightBulb bulbOn={bulbOn} setbulbOn={setbulbOn}/>
   </div>
 )
 }
-//Rolling up the state to the least ancestor possivble
-function LightBulb() {
-  const[bulbOn,setbulbOn]=useState(false);
+//Rolling up the state to the lowest common  ancestor of the two children possivble
+function LightBulb({bulbOn,setbulbOn}) {
+
   return <div>
-    <BulbState bulbOn={bulbOn}/>
-    <ToggleBulbState bulbOn={bulbOn} setbulbOn={setbulbOn}/>
+    <BulbState/>
+    <ToggleBulbState/>
   </div>
 }
 
 function BulbState({bulbOn}) {
-  
 return <div>
 {
   bulbOn?"Bulb on":"Bulb off"
