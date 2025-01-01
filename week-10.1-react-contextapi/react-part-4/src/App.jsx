@@ -7,6 +7,7 @@ return (
   <div>
   <LightBulb bulbOn={bulbOn} setbulbOn={setbulbOn}/>
   </div>
+  
 )
 }
 //Rolling up the state to the lowest common  ancestor of the two children possivble
