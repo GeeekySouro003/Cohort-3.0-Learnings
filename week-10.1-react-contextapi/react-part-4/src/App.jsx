@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import './App.css';
 
+const BulbContext=createContext();
 function App() {
   const[bulbOn,setbulbOn]=useState(false); //returns an array[] 
 return (
   <div>
-  <LightBulb bulbOn={bulbOn} setbulbOn={setbulbOn}/>
+    <BulbContext.Provider value={{
+      bulbOn:bulbOn,
+      setbulbOn:setbulbOn
+    }}>
+    <LightBulb/>
+    </BulbContext.Provider>
+  
   </div>
 )
 }
 //Rolling up the state to the lowest common  ancestor of the two children possivble
-function LightBulb({bulbOn,setbulbOn}) {
+function LightBulb() {
 
   return <div>
     <BulbState/>
@@ -19,6 +26,7 @@ function LightBulb({bulbOn,setbulbOn}) {
 }
 
 function BulbState({bulbOn}) {
+  const {bulbOn}=useContext(BulbContext)
 return <div>
 {
   bulbOn?"Bulb on":"Bulb off"
@@ -28,6 +36,7 @@ return <div>
 
 function ToggleBulbState({bulbOn,setbulbOn}) {
 
+  const {bulbOn,setbulbOn}=useContext(BulbContext);
   function toggle() {
     setbulbOn(!bulbOn);
   }
