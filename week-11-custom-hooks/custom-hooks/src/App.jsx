@@ -1,13 +1,22 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import {  useFetch, usePostTitle } from './hooks/useFetch'
+import {  useFetch, } from './hooks/useFetch'
 
 function App() {
  //const postTitle=usePostTitle()
+const[currentPost,setcurrentPost] = useState(1);
+ const{finalData,loading}=useFetch("https://jsonplaceholder.typicode.com/posts/"+ currentPost)
 
- const{finalData}=useFetch("https://jsonplaceholder.typicode.com/todos/1")
+ if(loading) {
+  return <div>
+    Loading....
+  </div>
+ }
 return (
   <div>
+    <button onClick={()=>setcurrentPost(1)}>1</button>
+    <button onClick={()=>setcurrentPost(2)}>2</button>
+    <button onClick={()=>setcurrentPost(3)}>3</button>
 {JSON.stringify(finalData)}
   </div>
 )  

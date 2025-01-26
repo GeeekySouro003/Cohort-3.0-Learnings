@@ -21,17 +21,22 @@ getPosts();
 //useFetch custom hooks
 export function  useFetch(url) {
     const[finalData,setfinalData]=useState({});
+    const[loading,setLoading]=useState(true);
 
     async function getDetails() {
+        setLoading(true);   
         const response=await fetch(url);
         const json=await response.json();
         setfinalData(json);
+        setLoading(false);
     }
     useEffect(()=>{
         getDetails();
-    },[])
+    },[url])
+
 
     return {
-        finalData
+        finalData,
+        loading
     }
 }
