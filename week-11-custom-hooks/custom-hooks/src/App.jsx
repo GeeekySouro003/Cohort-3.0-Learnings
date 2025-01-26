@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import {  usePostTitle } from './hooks/useFetch'
+import {  useFetch, usePostTitle } from './hooks/useFetch'
 
 function App() {
-  const postTitle=usePostTitle()
+ //const postTitle=usePostTitle()
+
+ const{finalData}=useFetch("https://jsonplaceholder.typicode.com/todos/1")
 return (
   <div>
-{postTitle}
+{JSON.stringify(finalData)}
   </div>
 )  
 }

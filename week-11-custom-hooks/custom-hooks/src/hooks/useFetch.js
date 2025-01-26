@@ -16,3 +16,22 @@ getPosts();
 
   return post.title;
 }
+
+
+//useFetch custom hooks
+export function  useFetch(url) {
+    const[finalData,setfinalData]=useState({});
+
+    async function getDetails() {
+        const response=await fetch(url);
+        const json=await response.json();
+        setfinalData(json);
+    }
+    useEffect(()=>{
+        getDetails();
+    },[])
+
+    return {
+        finalData
+    }
+}
