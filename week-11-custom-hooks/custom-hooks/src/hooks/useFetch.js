@@ -34,6 +34,11 @@ export function  useFetch(url) {
         getDetails();
     },[url])
 
+    //usefetch with refetchingg
+    useEffect(()=>{
+        setInterval(getDetails,10*1000) //cleanup
+    },[])
+
 
     return {
         finalData,
