@@ -1,10 +1,48 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import {  useFetch, } from './hooks/useFetch'
 import { usePrev } from './hooks/use-prev'
 
+const useDebounce = (value,delay) => {
+  const[debouncedValue,setDebouncedValue] =useState(value);
 
-//UsPreviou Hooks implementation
+  useEffect(()=>{
+    const handler=setTimeout(()=>{
+      setDebouncedValue(value);
+    },delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  },[value,delay]);
+
+  return debouncedValue;
+
+}
+
+function App() {
+
+  const[inputVal,setInputVal]=useState("");
+  const debouncedValue=useDebounce(inputVal,200);
+
+  function change(e) {
+    setInputVal(e.target.value)
+  }
+
+  useEffect(()=>{
+    //fetch
+    console.log("Expensive operation");
+    
+  },[debouncedValue])
+  return (
+    <>
+    <input type="text" onChange={change}></input>
+    </>
+  )
+}
+
+export default App
+//UsPrevious Hooks implementation
 // function App() {
 //   const[state,setState]=useState(0);
 //   const prev=usePrev(state);
