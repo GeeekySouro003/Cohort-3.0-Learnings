@@ -1,127 +1,114 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import {  useFetch, } from './hooks/useFetch'
+import { useFetch } from './hooks/useFetch'
 import { usePrev } from './hooks/use-prev'
 
-const useDebounce = (value,delay) => {
-  const[debouncedValue,setDebouncedValue] =useState(value);
+// Custom Hook: useDebounce
+// This hook delays updating the state value until after a specified delay period.
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
-  useEffect(()=>{
-    const handler=setTimeout(()=>{
+  useEffect(() => {
+    const handler = setTimeout(() => {
       setDebouncedValue(value);
-    },delay);
+    }, delay);
 
     return () => {
-      clearTimeout(handler);
+      clearTimeout(handler); // Cleanup timeout to prevent unnecessary updates
     };
-  },[value,delay]);
+  }, [value, delay]);
 
   return debouncedValue;
-
-}
+};
 
 function App() {
+  const [inputVal, setInputVal] = useState(""); // State to store input value
+  const debouncedValue = useDebounce(inputVal, 200); // Debounced value updates after delay
 
-  const[inputVal,setInputVal]=useState("");
-  const debouncedValue=useDebounce(inputVal,200);
-
+  // Function to handle input changes
   function change(e) {
-    setInputVal(e.target.value)
+    setInputVal(e.target.value);
   }
 
-  useEffect(()=>{
-    //fetch
+  useEffect(() => {
+    // Simulating an expensive operation that runs only when debouncedValue changes
     console.log("Expensive operation");
-    
-  },[debouncedValue])
+  }, [debouncedValue]);
+
   return (
     <>
-    <input type="text" onChange={change}></input>
+      <input type="text" onChange={change} />
     </>
-  )
+  );
 }
 
-export default App
-//UsPrevious Hooks implementation
+export default App;
+
+// ---------------------------- usePrev Hook Example ----------------------------
+// usePrev Hook stores the previous state value
 // function App() {
-//   const[state,setState]=useState(0);
-//   const prev=usePrev(state);
+//   const [state, setState] = useState(0);
+//   const prev = usePrev(state);
 
 //   return (
 //     <>
-//      <p>{state}</p>
-//      <button onClick={() => {
-//       setState(currentState=>currentState+1);
-//      }} >Click Me</button>
-//      <p>The previous value was {prev}</p>
+//       <p>{state}</p>
+//       <button onClick={() => setState((currentState) => currentState + 1)}>
+//         Click Me
+//       </button>
+//       <p>The previous value was {prev}</p>
 //     </>
-   
-//   )
+//   );
 // }
-
 // export default App;
 
-
-
-//Custom hooks for fetching urls
+// ---------------------------- useFetch Hook Example ----------------------------
+// Custom hook to fetch data from an API
 // function App() {
-//  //const postTitle=usePostTitle()
-// const[currentPost,setcurrentPost] = useState(1);
-//  const{finalData,loading}=useFetch("https://jsonplaceholder.typicode.com/posts/"+ currentPost)
+//   const [currentPost, setCurrentPost] = useState(1);
+//   const { finalData, loading } = useFetch(
+//     "https://jsonplaceholder.typicode.com/posts/" + currentPost
+//   );
 
-//  if(loading) {
-//   return <div>
-//     Loading....
-//   </div>
-//  }
-// return (
-//   <div>
-//     <button onClick={()=>setcurrentPost(1)}>1</button>
-//     <button onClick={()=>setcurrentPost(2)}>2</button>
-//     <button onClick={()=>setcurrentPost(3)}>3</button>
-// {JSON.stringify(finalData)}
-//   </div>
-// )  
+//   if (loading) {
+//     return <div>Loading....</div>;
+//   }
+
+//   return (
+//     <div>
+//       <button onClick={() => setCurrentPost(1)}>1</button>
+//       <button onClick={() => setCurrentPost(2)}>2</button>
+//       <button onClick={() => setCurrentPost(3)}>3</button>
+//       {JSON.stringify(finalData)}
+//     </div>
+//   );
 // }
+// export default App;
 
-
-// export default App
-
-
-
-
-//Custom hooks concept for state variable update useState
-
-// import { useState } from 'react'
-// import './App.css'
-
-// //custom hooks for counter variables
+// ---------------------------- useCounter Hook Example ----------------------------
+// Custom Hook: useCounter
 // function useCounter() {
-//   const[count,setcount]=useState(0);
-
+//   const [count, setCount] = useState(0);
 
 //   function increaseCount() {
-//     setcount(count=>count+1);
+//     setCount((count) => count + 1);
 //   }
 
-//   return { // returning or exporting the  count and increasecount
-//     count:count,
-//     increaseCount:increaseCount
-//   }
+//   return {
+//     count,
+//     increaseCount,
+//   };
 // }
 
-
-
 // function App() {
- 
-// const{count,increaseCount} = useCounter(); // rendering the usecounter hook over the app component
+//   const { count, increaseCount } = useCounter(); // Using the custom hook
+
 //   return (
 //     <>
 //       <div>
-//        <button onClick={increaseCount}>Increase {count} </button>
-//        </div>
+//         <button onClick={increaseCount}>Increase {count}</button>
+//       </div>
 //     </>
-//   )
+//   );
 // }
-
-// export default App
+// export default App;

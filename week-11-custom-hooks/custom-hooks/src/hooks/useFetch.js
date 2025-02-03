@@ -1,47 +1,53 @@
 import { useEffect, useState } from "react";
-//you cant create function that use hooks under the hood
-//every hook starts use with hook
+
+// Custom Hook: usePostTitle
+// Fetches a post title from an API and returns it.
 export function usePostTitle() {
-    const[post,setpost]=useState({});
+    const [post, setPost] = useState({});
 
-async function getPosts() {
-  const response=await fetch("https://jsonplaceholder.typicode.com/todos/1")
-  const json=await response.json();
-  setpost(json);
+    // Function to fetch post data from API
+    async function getPosts() {
+        const response = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+        const json = await response.json();
+        setPost(json);
+    }
+
+    useEffect(() => {
+        // Fetch data when the component mounts
+        getPosts();
+    }, []);
+
+    return post.title;
 }
-  useEffect(()=>{ // for rendering component when app is mounted and in useeffect you cannot use 
-    //async in the function
-getPosts();
-  },[])
 
-  return post.title;
-}
+// Custom Hook: useFetch
+// Fetches data from a given URL and returns the data along with a loading state.
+export function useFetch(url) {
+    const [finalData, setFinalData] = useState({});
+    const [loading, setLoading] = useState(true);
 
-
-//useFetch custom hooks
-export function  useFetch(url) {
-    const[finalData,setfinalData]=useState({});
-    const[loading,setLoading]=useState(true);
-
+    // Function to fetch details from the given URL
     async function getDetails() {
-        setLoading(true);   
-        const response=await fetch(url);
-        const json=await response.json();
-        setfinalData(json);
+        setLoading(true);
+        const response = await fetch(url);
+        const json = await response.json();
+        setFinalData(json);
         setLoading(false);
     }
-    useEffect(()=>{
+
+    useEffect(() => {
+        // Fetch data when the URL changes
         getDetails();
-    },[url])
+    }, [url]);
 
-    //usefetch with refetchingg
-    useEffect(()=>{
-        setInterval(getDetails,10*1000) //cleanup
-    },[])
-
+    useEffect(() => {
+        // Set interval to refetch data every 10 seconds
+        const interval = setInterval(getDetails, 10 * 1000);
+        return () => clearInterval(interval); // Cleanup interval on unmount
+    }, []);
 
     return {
         finalData,
         loading
-    }
+    };
 }
