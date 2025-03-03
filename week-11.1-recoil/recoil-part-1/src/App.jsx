@@ -2,32 +2,35 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import {RecoilRoot, useRecoilValue, useSetRecoilState} from 'recoil';
+import { counterAtom } from './store/atoms/Counter';
 
 function App() {
  
 
   return (
-    <>
+   <RecoilRoot>
     <Counter/>
-    </>
+   </RecoilRoot>
   )
 }
 
 function Counter() {
-  const[count,setCount]=useState(0);
   return <div>
-    <CurrentCount count={count} />
-    <Increase setCount={setCount}/>
-    <Decrease setCount={setCount}/>
+    <CurrentCount  />
+    <Increase />
+    <Decrease />
   </div>
 }
-function CurrentCount({count}) {
+function CurrentCount() { // suppose to render the count atom from recoil
+  const count=useRecoilValue(counterAtom); // this currentcount component has subscribed to the value of this atom
 return <div>
   {count}
 </div>
 }
 
-function Increase({setCount}) {
+function Increase() {
+  const setCount=useSetRecoilState(counterAtom); // this component is subscribed to the value of this atom which is setter
 
   function increase() {
     setCount(c=>c+1);
@@ -37,7 +40,8 @@ function Increase({setCount}) {
   </div>
 }
 
-function Decrease({setCount}) {
+function Decrease() {
+  const setCount=useSetRecoilState(counterAtom);
   function decrease() {
     setCount(c=>c-1);
   }
