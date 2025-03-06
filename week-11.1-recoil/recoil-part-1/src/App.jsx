@@ -1,65 +1,46 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState,memo } from 'react'
 import './App.css'
-import {RecoilRoot, useRecoilValue, useSetRecoilState} from 'recoil';
-import { counterAtom } from './store/atoms/Counter';
-import { memo } from 'react';
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from 'recoil';
+import { counterAtom, evenSelector } from './store/atoms/Counter';
 
-function App() {
-
- 
-
-  return (
-   //<RecoilRoot>
-    <Counter/>
-   //</RecoilRoot>
-  )
-}
-
-function Counter() {
-  const[count,setCount] =useState(0);
-  useEffect(() =>{
-    setInterval(() => {
-
-      setCount(c=>c+1);
-    },3000)
-  },[])
-  return <div>
-   <CurrentCount/>
-    <Increase />
-    <Decrease />
-  </div>
-}
-
-//memo is used when a component doesnt receive the props and doesnot render 
-
-//const MemoizedCurrentCount =memo(CurrentCount);
-  const CurrentCount=memo (function() { // suppose to render the count atom from recoil
-  //const count=useRecoilValue(counterAtom); // this currentcount component has subscribed to the value of this atom
+function App () {
 return <div>
- 1
+  <RecoilRoot>
+  <Buttons />
+  <Counter/>
+  <IsEven/>
+  </RecoilRoot>
+ 
 </div>
-})
+}
 
-const Increase=memo(function() {
-  const setCount=useSetRecoilState(counterAtom); // this component is subscribed to the value of this atom which is setter
-
+function Buttons () {
+  const setCount=useSetRecoilState(counterAtom); //setter of the counter
   function increase() {
-    setCount(c=>c+1);
+    setCount(c=>c+2);
   }
-  return <div>
-    <button onClick={increase}>Increase</button>
-  </div>
-})
 
-const Decrease=memo(function() {
-  const setCount=useSetRecoilState(counterAtom);
   function decrease() {
     setCount(c=>c-1);
   }
   return <div>
+    <button onClick={increase}>Increase</button>
     <button onClick={decrease}>Decrease</button>
   </div>
-})
-export default App
+}
+
+function Counter() {
+  const count=useRecoilValue(counterAtom);//subscribing to the actual atom if changes re-renders
+  return <div>
+    {count}
+  </div>
+}
+
+function IsEven() {
+  const even=useRecoilValue(evenSelector); //subscribing to some part of atom
+  return <div>
+    {even ? "Even" : "Odd"}
+  </div>
+}
+
+export default App;
