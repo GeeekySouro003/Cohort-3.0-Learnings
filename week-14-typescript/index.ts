@@ -17,3 +17,15 @@ function TwoSum(a:number,b:number):number {
 return a+b;
 }
 console.log(TwoSum(5,7));
+
+//Return true or false based on if a user is 18+
+function isLegal(age:number):boolean { //boolean is the return type of the function
+    if(age>18) {
+        return true;
+    }
+    else {
+        return false;
+    
+    }
+}
+console.log(isLegal(21));
