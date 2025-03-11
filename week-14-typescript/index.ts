@@ -29,3 +29,12 @@ function isLegal(age:number):boolean { //boolean is the return type of the funct
     }
 }
 console.log(isLegal(21));
+
+
+function Another(fn:()=>void ) {
+    setTimeout(fn,1000);
+
+}
+Another(function() {
+    console.log("heyyyy bhiduu")
+})
