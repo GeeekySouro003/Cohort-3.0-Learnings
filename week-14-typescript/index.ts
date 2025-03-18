@@ -45,3 +45,5 @@
 let greet = () => {
     console.log('Hi there!');
 }
+
+//complete the tsconfig assignment
