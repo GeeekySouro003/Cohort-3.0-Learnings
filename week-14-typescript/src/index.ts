@@ -12,6 +12,7 @@
 // Greet('Souradip');
 
 
+
 // //Write a function that calculates the sum of two functions
 // function TwoSum(a:number,b:number):number {
 // return a+b;
